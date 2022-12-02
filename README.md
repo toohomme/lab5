@@ -6,9 +6,9 @@
 
 | Задание | Выполнение | Баллы |
 | ------ | ------ | ------ |
-| Задание 1 | # | 60 |
-| Задание 2 | # | 20 |
-| Задание 3 | # | 20 |
+| Задание 1 | * | 60 |
+| Задание 2 | * | 20 |
+| Задание 3 | * | 20 |
 
 знак "*" - задание выполнено; знак "#" - задание не выполнено;
 
@@ -22,156 +22,91 @@
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 ## Цель работы
-Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
+
+Интеграция экономической системы в проект Unity и обучение ML-Agent
 
 ## Задание 1
-### Написать программы Hello World на Python и Unity
-Ход работы:
 
-1.Запуск программы выводящей Hello World в Google Colab:
-![image](https://user-images.githubusercontent.com/102966721/192340576-f4121125-d660-4ab4-abb3-b7fe8dd947b3.png)
-2.Сохранение блокнота с программой на диск:
-![image](https://user-images.githubusercontent.com/102966721/192340769-12a1658f-6162-4694-bc62-c99bda68d993.png)
-3.Вывод в консоль Hello World на Unity:
-![image](https://user-images.githubusercontent.com/102966721/192340939-4765700e-cda7-4868-99ee-ae3ab21f9ed6.png)
-4.Код на C# для вывода в консоль на Unity:
-![image](https://user-images.githubusercontent.com/102966721/192341090-ffc03b47-09bd-45e8-8b92-c822276d10b2.png)
+После подключения ML-агента устанавливаем tensorflow:
 
-Итог: Вывели сообщение Hello World на Python и Unity
+![image](https://user-images.githubusercontent.com/102966721/205350811-a5494507-c69a-412c-9f3d-0e6bb6df9677.png)
+
+![image](https://user-images.githubusercontent.com/102966721/205351198-843999a5-6026-49a5-840f-33597720d44d.png)
+
 
 
 ## Задание 2
-### В разделе "ход работы" пошагово выполнить каждый пункт с описанием и примером реализации задачи по теме лабораторной работы.
 
-1.Подготовка данных:
-```py
-In [ ]:
-#Import the required modules, numpy for calculation, and Matplotlib for drawing
-import numpy as np
-import matplotlib.pyplot as plt
-#This code is for jupyter Notebook only
-%matplotlib inline
+Обучение без изменения параметров файла:
 
-# define data, and change list to array
-x = [3,21,22,34,54,34,55,67,89,99]
-x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
-y = np.array(y)
+![image](https://user-images.githubusercontent.com/102966721/205351714-8ddc0cb0-2bac-45d9-8fd0-5506215706cb.png)
+![image](https://user-images.githubusercontent.com/102966721/205351760-786f94bf-ab06-4f67-b87b-8f1f4190891b.png)
 
-#Show the effect of a scatter plot
-plt.scatter(x,y)
-```
+###Параметр lambd увеличен до 0.99:
 
-2. Определение связанных функций. Функция model определяет модель линейной регрессии wx+b. Функция loss_function - функиця потерь среденеквадратичной ошибки. Функция optimize: метод градиентного спуска для нахождения частных производных w и b. Функция iterated возвращает a и b после итераций.
-```py
-In [ ]:
-def model (a,b,x):
-    return a * x + b
+![image](https://user-images.githubusercontent.com/102966721/205351904-786a2b2a-71d7-4b3a-baa4-7c398f5eee6b.png)
 
-def loss_function(a,b,x,y):
-    num = len(x)
-    prediction = model(a,b,x)
-    return (0.5/num)*(np.square(prediction-y)).sum()
+До изменения параметра lambd обучение завершалось на 15000 шаге, с вознаграждением 1. После увеличения этого параметра обучение длится дольше.
 
-def optimize (a,b,x,y):
-    num = len(x)
-    prediction = model(a,b,x)
-    da = (1.0/num)*((prediction - y)*x).sum()
-    db = (1.0/num)*((prediction - y).sum())
-    a = a - Lr*da
-    b = b - Lr*db
-    return a,b
+###При увеличении параметра learning_rate:
 
-def iterate(a,b,x,y,times):
-    for i in range(times):
-        a,b = optimize(a,b,x,y)
-    return a,b
-    
-import numpy as np
-import matplotlib.pyplot as plt
-%matplotlib inline
-Lr = 0.000001
-x = [3,21,22,34,54,34,55,67,89,99]
-x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
-y = np.array(y)
-```
-3. Задаем параметры и производим итерации:
-```py
-def model (a,b,x):
-    return a * x + b
+![image](https://user-images.githubusercontent.com/102966721/205352082-9b5bcdd4-6f4b-4d0d-bdba-3ec79b2217c7.png)
 
-def loss_function(a,b,x,y):
-    num = len(x)
-    prediction = model(a,b,x)
-    return (0.5/num)*(np.square(prediction-y)).sum()
+Как и при изменении предыдущего параметра, обучение занимает большее количество времени.
 
-def optimize (a,b,x,y):
-    num = len(x)
-    prediction = model(a,b,x)
-    da = (1.0/num)*((prediction - y)*x).sum()
-    db = (1.0/num)*((prediction - y).sum())
-    a = a - Lr*da
-    b = b - Lr*db
-    return a,b
+###При увеличении параметра beta:
 
-def iterate(a,b,x,y,times):
-    for i in range(times):
-        a,b = optimize(a,b,x,y)
-    return a,b
-    
-import numpy as np
-import matplotlib.pyplot as plt
-%matplotlib inline
-Lr = 0.000001
-x = [3,21,22,34,54,34,55,67,89,99]
-x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
-y = np.array(y)
-a = np.random.rand(1)
-print(a)
-b = np.random.rand(1)
-print(b)
-#Для итераций меняем последний параметр, в функции iterate
-a,b = iterate(a,b,x,y,1) 
-prediction = model(a,b,x)
-loss = loss_function(a,b,x,y)
-print(a,b,loss)
-plt.scatter(x,y)
-plt.plot(x,prediction)
+![image](https://user-images.githubusercontent.com/102966721/205352168-dfedfcb7-5742-4961-9177-6cfa8d497693.png)
 
-plt.scatter(x,y)
-```
-На каждом шаге итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации. 
+Обучение продолжается столько же шагов, сколько и без изменений параметра 
 
+###При увеличении параметра epsilon:
+
+![image](https://user-images.githubusercontent.com/102966721/205352240-506d470d-301b-48d0-ab54-db7b247e742c.png)
+
+Обучение длится большее количество шагов, но время шагов заметно меньше. Так 15000 шагов без изменений этого параметра длятся 122 секунды, а после изменения 115.
+
+###При увеличении параметра gamma:
+
+![image](https://user-images.githubusercontent.com/102966721/205352298-934dfbbe-4329-42a6-8092-5869016da449.png)
+
+Обучение завершается на 10000 шагов, быстрее, чем при стандартном значении параметра.
+
+###При уменьшении параметра gamma:
+
+![image](https://user-images.githubusercontent.com/102966721/205352391-69ec2c4d-6792-4de1-8899-3e8b2ed69058.png)
+
+Обучение происходит быстрее.
+
+###При уменьшении параметра hidden_units в два раза:
+
+![image](https://user-images.githubusercontent.com/102966721/205352484-7ed63727-74e7-4efb-a0a7-73e35dcf55d6.png)
+
+Максимальная награда уменьшается в два раза.
+
+###При увеличении параметра num_epoch:
+
+![image](https://user-images.githubusercontent.com/102966721/205352577-8246ab00-e56a-44ff-9267-573731695148.png)
+
+Обучение происходит за 10000 шагов, быстрее, чем без изменения параметра.
 
 ## Задание 3
-### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+![image](https://user-images.githubusercontent.com/102966721/205356172-1d93f688-1d69-4422-92c0-c0d7cba96d9a.png)
 
-```py
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+![image](https://user-images.githubusercontent.com/102966721/205355248-f6453d36-d8c8-4ea9-b7bf-a5e4840a2289.png)
 
-```
+![image](https://user-images.githubusercontent.com/102966721/205356220-a2e11542-b4a0-4a63-aaee-8b3013972ed9.png)
+
+
+Cumulative Reward: Это общее вознаграждение, которое максимизирует агент.
+
+Episode Length: Отвечает за длину периодов обучения.
+
+Value loss: Величина потери значения.
+
+Entropy: График показывает величину исследования агента.
 
 ## Выводы
 
