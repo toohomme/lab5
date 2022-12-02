@@ -27,6 +27,9 @@
 
 ## Задание 1
 
+![image](https://user-images.githubusercontent.com/102966721/205356818-18121c2f-6249-4673-b9b7-fdd804f704c0.png)
+
+
 После подключения ML-агента устанавливаем tensorflow:
 
 ![image](https://user-images.githubusercontent.com/102966721/205350811-a5494507-c69a-412c-9f3d-0e6bb6df9677.png)
@@ -89,6 +92,8 @@
 ![image](https://user-images.githubusercontent.com/102966721/205352577-8246ab00-e56a-44ff-9267-573731695148.png)
 
 Обучение происходит за 10000 шагов, быстрее, чем без изменения параметра.
+
+
 
 ## Задание 3
 
